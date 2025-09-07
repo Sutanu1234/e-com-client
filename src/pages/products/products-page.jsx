@@ -7,29 +7,28 @@ import ProductGrid from "./pages/ProductGrid";
 import API from "@/lib/api";
 import { toast } from "sonner";
 
-const categories = ["Educational Toys", "Vehicles & RC Toys", "Puzzles & Brain Games", "Arts & Crafts", "Action Figures"];
+const categories = [
+  "Educational Toys",
+  "Vehicles & RC Toys",
+  "Puzzles & Brain Games",
+  "Arts & Crafts",
+  "Action Figures",
+];
 
 export default function ProductPage() {
-  const [products, setProducts] = useState([]);
+  const [allProducts, setAllProducts] = useState([]); // store all fetched products
+  const [products, setProducts] = useState([]); // store filtered products
   const [search, setSearch] = useState("");
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [sort, setSort] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  // fetch all products once
   const fetchProducts = async () => {
     setLoading(true);
     try {
-      const params = new URLSearchParams();
-
-      if (search.trim()) params.append("name", search);
-
-      selectedCategories.forEach((cat) => {
-        params.append("categories", cat); // Append each category separately
-      });
-
-      if (sort) params.append("sort", sort);
-
-      const res = await API.get(`/products?${params.toString()}`);
+      const res = await API.get(`/products`);
+      setAllProducts(res.data);
       setProducts(res.data);
     } catch (err) {
       console.error(err);
@@ -41,7 +40,34 @@ export default function ProductPage() {
 
   useEffect(() => {
     fetchProducts();
-  }, [search, selectedCategories, sort]);
+  }, []);
+
+  // apply filters (search, categories, sort) locally
+  useEffect(() => {
+    let filtered = [...allProducts];
+
+    if (search.trim()) {
+      filtered = filtered.filter((p) =>
+        p.name.toLowerCase().includes(search.toLowerCase())
+      );
+    }
+
+    if (selectedCategories.length > 0) {
+      filtered = filtered.filter((p) =>
+        selectedCategories.includes(p.category)
+      );
+    }
+
+    if (sort === "price-asc") {
+      filtered.sort((a, b) => a.price - b.price);
+    } else if (sort === "price-desc") {
+      filtered.sort((a, b) => b.price - a.price);
+    } else if (sort === "rating-desc") {
+      filtered.sort((a, b) => parseFloat(b.rating) - parseFloat(a.rating));
+    }
+
+    setProducts(filtered);
+  }, [search, selectedCategories, sort, allProducts]);
 
   const toggleCategory = (cat) =>
     setSelectedCategories((prev) =>
@@ -49,7 +75,6 @@ export default function ProductPage() {
     );
 
   const handleAddToCart = async (addCartProduct, productName) => {
-    console.log(addCartProduct);
     try {
       await API.post("/cart/add", addCartProduct);
       toast.success(`${productName} added to cart`, { duration: 1500 });
