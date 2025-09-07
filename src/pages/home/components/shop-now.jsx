@@ -13,7 +13,8 @@ export default function ShopNow() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await API.fetch("https://your-backend-url.com/products"); // ✅ Replace with your Spring Boot backend
+        const params = new URLSearchParams();
+        const res = await API.get(`/products?${params.toString()}`) // ✅ Replace with your Spring Boot backend
         const data = await res.json();
 
         // Convert rating to number and sort
