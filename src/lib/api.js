@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "https://e-com-server-production.up.railway.app/", // replace with your backend URL
+  baseURL: "https://e-com-server-production.up.railway.app", // replace with your backend URL
 });
 
 // Add token to requests if present
