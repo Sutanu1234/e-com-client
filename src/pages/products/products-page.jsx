@@ -7,7 +7,7 @@ import ProductGrid from "./pages/ProductGrid";
 import API from "@/lib/api";
 import { toast } from "sonner";
 
-const categories = ["Educational", "Vehicles", "Puzzles", "Action Figures"];
+const categories = ["Educational Toys", "Vehicles & RC Toys", "Puzzles & Brain Games", "Arts & Crafts", "Action Figures"];
 
 export default function ProductPage() {
   const [products, setProducts] = useState([]);
