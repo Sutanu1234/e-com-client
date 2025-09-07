@@ -2,8 +2,11 @@
 
 import React from "react";
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 
 export default function LandingPage() {
+  const navigate = useNavigate();
+
   return (
     <div className="relative mt-16 md:mt20 max-h-screen md:h-[680px] w-full flex items-center justify-center bg-gradient-to-br from-blue-100 via-white to-blue-50 px-6 md:px-12 overflow-hidden">
       {/* Background Image */}
@@ -27,12 +30,15 @@ export default function LandingPage() {
             smiles.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-end">
-            <Button className="bg-blue-600 hover:bg-blue-700 text-white cursor-pointer rounded-md px-8 py-4 text-base md:text-lg font-semibold shadow-xl transition transform hover:scale-105">
+            <Button className="bg-blue-600 hover:bg-blue-700 text-white cursor-pointer rounded-md px-8 py-4 text-base md:text-lg font-semibold shadow-xl transition transform hover:scale-105"
+              onClick={() => {navigate("/products")}}
+            >
               🧸 Shop Teddy Bears
             </Button>
             <Button
               variant="outline"
               className="border-blue-600 border-[1px] text-blue-600 hover:text-blue-600 cursor-pointer rounded-md px-8 py-4 text-base md:text-lg font-semibold"
+              onClick={() => {navigate("/products")}}
             >
               🚀 Explore Boys' Toys
             </Button>
