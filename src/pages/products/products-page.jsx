@@ -30,7 +30,6 @@ export default function ProductPage() {
       if (sort) params.append("sort", sort);
 
       const res = await API.get(`/products?${params.toString()}`);
-      console.log(res.data);
       setProducts(res.data);
     } catch (err) {
       console.error(err);

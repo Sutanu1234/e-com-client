@@ -15,7 +15,6 @@ const CartPage = () => {
     setLoading(true);
     try {
       const res = await API.get("/cart");
-      console.log(res.data);
       setCartItems(res.data);
     } catch (err) {
       console.error(err);
