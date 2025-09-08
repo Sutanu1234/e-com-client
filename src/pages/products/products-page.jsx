@@ -58,9 +58,9 @@ export default function ProductPage() {
       );
     }
 
-    if (sort === "price-asc") {
+    if (sort === "LOW_TO_HIGH") {
       filtered.sort((a, b) => a.price - b.price);
-    } else if (sort === "price-desc") {
+    } else if (sort === "HIGH_TO_LOW") {
       filtered.sort((a, b) => b.price - a.price);
     } else if (sort === "rating-desc") {
       filtered.sort((a, b) => parseFloat(b.rating) - parseFloat(a.rating));
